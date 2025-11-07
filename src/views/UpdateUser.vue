@@ -28,3 +28,12 @@
     </div>
 </template>
 
+<style scoped>
+/* Tambahkan padding dan margin agar tampilan lebih responsif pada perangkat kecil */
+@media (max-width: 640px) {
+    div { 
+        font-size: 0.6rem;
+        width:200px;
+    }
+}
+</style>
