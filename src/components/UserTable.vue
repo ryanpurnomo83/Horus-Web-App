@@ -1,5 +1,6 @@
 <template>
-    <div class="overflow-x-auto"> <!-- Membungkus tabel dengan scroll horizontal -->
+    <div class="overflow-x-auto">
+        <!-- Membungkus tabel dengan scroll horizontal -->
         <table class="mt-10 border-collapse border border-gray-400 w-full table-auto sm:table-fixed">
             <thead class="border-b border-gray-300">
                 <tr>
@@ -11,14 +12,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="p-4 text-xs sm:text-sm">1</td>
-                    <td class="p-4 text-xs sm:text-sm">Ryan</td>
-                    <td class="p-4 text-xs sm:text-sm break-words whitespace-normal">Ryan Purnomo</td>
-                    <td class="p-4 text-xs sm:text-sm break-words sm:max-w-xs whitespace-normal">ryanpurnomo83@gmail.com</td>
+                <!-- Loop data pengguna yang diambil dari API -->
+                <tr v-for="user in users" :key="user.id">
+                    <td class="p-4 text-xs sm:text-sm">{{ user.id }}</td>
+                    <td class="p-4 text-xs sm:text-sm">{{ user.username }}</td>
+                    <td class="p-4 text-xs sm:text-sm break-words whitespace-normal">{{ user.full_name }}</td>
+                    <td class="p-4 text-xs sm:text-sm break-words sm:max-w-xs whitespace-normal">{{ user.email }}</td>
                     <td class="p-4 flex flex-col gap-3 text-xs sm:text-sm w-full">
-                        <button class="px-4 py-2 bg-blue-500 text-black text-xs sm:text-sm rounded" @click="$router.push('/update/user')">Update</button>
-                        <button class="px-4 py-2 bg-red-500 text-black text-xs sm:text-sm rounded">Hapus</button>
+                        <button class="px-4 py-2 bg-blue-500 text-black text-xs sm:text-sm rounded" @click="updateUser(user.id)">Update</button>
+                        <button class="px-4 py-2 bg-red-500 text-black text-xs sm:text-sm rounded" @click="deleteUser(user.id)">Hapus</button>
                     </td>
                 </tr>
             </tbody>
@@ -26,10 +28,44 @@
     </div>
 </template>
 
+<script>
+import { getUsers } from '../services/api.js'; // Import fungsi untuk mengambil data
+
+export default {
+    data() {
+        return {
+            users: [],  // Array untuk menyimpan data pengguna
+        };
+    },
+    methods: {
+        async fetchUsers() {
+            try {   
+                const data = await getUsers();
+                console.log(data);
+                this.users = data;  // Simpan data yang diterima ke dalam state users
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        },
+        updateUser(id) {
+            // Lakukan sesuatu untuk update user
+            this.$router.push(`/update/user/${id}`);
+        },
+        deleteUser(id) {
+            // Lakukan sesuatu untuk delete user
+            console.log(`User with id ${id} will be deleted`);
+        }
+    },
+    mounted() {
+        this.fetchUsers();  // Panggil fungsi fetchUsers saat komponen dipasang
+    }
+};
+</script>
+
 <style scoped>
 /* Tambahkan padding dan margin agar tampilan lebih responsif pada perangkat kecil */
 @media (max-width: 640px) {
-    div{
+    div {
         width: 100%; /* Menjaga lebar container tetap penuh */
     }
     
