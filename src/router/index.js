@@ -1,29 +1,34 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import Dashboard from '../views/Dashbord.vue'
+import Dashboard from '../views/Dashboard.vue'
 import UpdateUser from '../views/UpdateUser.vue'
 
 const routes = [
     {
-        path: '/Login',
+        path: '/login', // ← Ubah ke path yang unik
         name: 'Login',
         component: Login
     },
     {
-        path: '/',
+        path: '/register', // ← Ubah ke path yang unik
         name: 'Register',
         component: Register
     },
     {
-        path: '/',
+        path: '/dashboard', // ← Ubah ke path yang unik
         name: 'Dashboard',
         component: Dashboard
     },
     {
-        path: '/',
+        path: '/update-user', // ← Ubah ke path yang unik
         name: 'UpdateUser',
         component: UpdateUser
+    },
+    // Optional: Tambahkan redirect untuk root path
+    {
+        path: '/',
+        redirect: '/login' // atau path lain yang diinginkan
     }
 ]
 
